@@ -333,7 +333,7 @@ public class RskForksBridgeTest {
     }
 
     private BridgeState callGetStateForDebuggingTx() throws IOException, ClassNotFoundException {
-        RskSystemProperties beforeBambooProperties = new RskSystemProperties();
+        TestSystemProperties beforeBambooProperties = new TestSystemProperties();
         beforeBambooProperties.setBlockchainConfig(new RegTestConfig() {
             @Override
             public boolean isRfs94() {

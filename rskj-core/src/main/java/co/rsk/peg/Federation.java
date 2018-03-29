@@ -69,6 +69,9 @@ public final class Federation {
         this.address = null;
     }
 
+    public List<ECKey> getRskPublicKeys() {
+        return rskPublicKeys;
+    }
     public List<BtcECKey> getPublicKeys() {
         return publicKeys;
     }

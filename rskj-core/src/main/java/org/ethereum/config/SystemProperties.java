@@ -164,7 +164,7 @@ public abstract class SystemProperties {
         logger.info("Config ( {} ): test properties from resource 'test-rskj.conf'", testConfig.entrySet().isEmpty() ? NO : YES);
         String file = System.getProperty("rsk.conf.file");
         Config cmdLineConfigFile = file != null ? ConfigFactory.parseFile(new File(file)) : ConfigFactory.empty();
-        logger.info("Config ( {} ): user properties from -Drsk.conf.file file '{}'", cmdLineConfigFile.entrySet().isEmpty() ? NO : YES, file);
+        logger.info("Config ( {} ): user properties from -Drsk.conf.file '{}'", cmdLineConfigFile.entrySet().isEmpty() ? NO : YES, file);
         return javaSystemProperties
                 .withFallback(cmdLineConfigFile)
                 .withFallback(testConfig)

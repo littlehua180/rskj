@@ -42,6 +42,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.spongycastle.util.encoders.Hex;
 
+import javax.naming.AuthenticationException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -306,6 +307,29 @@ public class Bridge extends PrecompiledContracts.PrecompiledContract {
             }
 
             this.bridgeSupport = setup();
+
+            Set<CallTransaction.Function> availableMethodsForUsersNotFederated = new HashSet<CallTransaction.Function>(
+                    Arrays.asList(
+                            UPDATE_COLLECTIONS,
+                            RECEIVE_HEADERS,
+                            REGISTER_BTC_TRANSACTION,
+                            ADD_SIGNATURE,
+                            GET_STATE_FOR_DEBUGGING,
+                            CREATE_FEDERATION,
+                            ADD_FEDERATOR_PUBLIC_KEY,
+                            COMMIT_FEDERATION,
+                            ROLLBACK_FEDERATION,
+                            ADD_LOCK_WHITELIST_ADDRESS,
+                            REMOVE_LOCK_WHITELIST_ADDRESS,
+                            SET_LOCK_WHITELIST_DISABLE_BLOCK_DELAY,
+                            VOTE_FEE_PER_KB
+                    ));
+
+            if (availableMethodsForUsersNotFederated.contains(bridgeParsedData.function)) {
+                if (!BridgeUtils.isFromFederateMember (rskTx, this.bridgeSupport.getActiveFederation())){
+                    throw new AuthenticationException(String.format("Sender is not part of the federation, so he is not enabled to call the function: %s",bridgeParsedData.function.name));
+                }
+            }
 
             // bridgeParsedData.function should be one of the CallTransaction.Function declared above.
             // If the user tries to call an non-existent function, parseData() will return null.

@@ -223,7 +223,7 @@ public class BridgeTest {
     }
 
     private void executeBridgeMethod(BlockchainNetConfig blockchainConfig, CallTransaction.Function bridgeMethod) {
-        RskSystemProperties propertiesInBamboo = new RskSystemProperties();
+        TestSystemProperties propertiesInBamboo = new TestSystemProperties();
         propertiesInBamboo.setBlockchainConfig(blockchainConfig);
 
         Repository repository = new RepositoryImpl(propertiesInBamboo).startTracking();
